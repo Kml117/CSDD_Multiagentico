@@ -1,0 +1,28 @@
+package:
+  name: "csdd-multiagent-engineering-system"
+  version: "0.4.2"
+  status: "local_runtime_ready_agents_launched_by_owner"
+  constitutional_skill: "csdd-mentor@1.6.1"
+  entrypoint: "skills/csdd-multiagent-orchestrator/SKILL.md"
+  owner_authority: "project_owner"
+  python_min: "3.11"
+  skills:            # nombre de carpeta == name del frontmatter (requisito de Agent Skills / claude.ai)
+    - "csdd-mentor"
+    - "csdd-multiagent-orchestrator"
+    - "csdd-agent-communication"
+    - "csdd-executive-supervisor"
+    - "csdd-software-architect"
+    - "csdd-implementation-engineer"
+    - "csdd-qa-verification"
+    - "csdd-security-reviewer"
+  installs_into_repo:
+    ".csdd/": "skills/csdd-multiagent-orchestrator/assets/system/"
+    ".claude/skills/ y .agents/skills/": "skills/*"
+    ".claude/settings.json": ".csdd/integrations/claude/settings.json"
+    ".claude/agents/ y .agents/agents/": "generados por .csdd/tools/sync_agents.py"
+    ".github/workflows/csdd-gate.yml": ".csdd/integrations/github/csdd-gate.yml"
+    "AGENTS.md, CLAUDE.md": ".csdd/templates/repo/"
+  claude_web: "dist/claude-web/<skill>.zip (una por skill)"
+  verification:
+    tests: "python3 -m unittest discover -s tests -v"
+    semgrep_rules: "NOT_RUN en el entorno de construcción (sin Semgrep); ejecutar semgrep --test .csdd/policy/semgrep/"
